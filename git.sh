@@ -1,1 +1,3 @@
-git add . && git commit -m "Commit from bash script" && git push
+echo "Enter commit comment\n"
+read comment
+git add . && git commit -m '$comment' && git push
