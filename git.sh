@@ -5,7 +5,7 @@ read comment
 git add . && git commit -m '$comment'
 echo "do you want to push now [y/n]"
 read var
-if [[ var =='y' ]]; then
+if [[ $var -eq 'y' ]]; then
 	git push
 fi
 	exit
