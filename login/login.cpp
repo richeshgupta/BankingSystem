@@ -6,26 +6,26 @@ int login_status  = 0;
 class credentials
 {
 	string username;
-	string password;
+	string password; 
 public:
 	void input_credentials();
 	void write_credentials();
 	void credentials_register();
 	void credentials_login();
 	void credentials_logout();
+	string ret_username()
+	{
+		return username;
+	}
 };
 void credentials::input_credentials()
 {	
 		fstream f1;
 		f1.open("login/users_db.dat",ios::binary);
 		cout<<"\n Enter Username\n";
-		cin>>username;
-		string temp_u = username;
-		while(f1.read((char*)this,sizeof(this)))
-		{
-			if(this->username == temp_u)
-				cout<<"Username already exists\n";
-		}
+		string temp_u;
+		cin>>temp_u;
+		username = temp_u;
 		cout<<"\n Enter password\n";
 		cin>>password;
 	}
@@ -48,24 +48,35 @@ void credentials::credentials_login()
 	cout<<"\n\t\t -- login --\n\n";
 	cout<<"\nEnter username : ";cin>>temp_u;
 	cout<<"\nEnter password : ";cin>>temp_p;
-
+	credentials c;
 	fstream f1;
-	f1.open("login/users_db",ios::binary);
-	while(f1.read((char*)this,sizeof(this)))
+	f1.open("login/users_db.dat",ios::binary);
+	int flag_found = 0;
+	while(f1.read((char*)&c,sizeof(c)))
 	{
-		if(this->username == temp_u)
-		{
+		if(ret_username() == temp_u)
+		{	
+			flag_found  = 1;
+
 			if(this->password == temp_p)
 			{
+				cout<<"\n Logged in Successfully!\n";
 				login_status = 1;
 				break;
 			}
-		}
-	}
-	cout<<"\nLogin was Successfull\n";
+			else
+			{
+				cout<<"Wrong password\n";
 
+				//cout<<"status\n "<<login_status;
+				this->credentials_login();
+			}
+		}
+		
+	}
+	f1.close();
 }
-void credentials::logout()
+void credentials::credentials_logout()
 {
 	if(login_status)
 	{

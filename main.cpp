@@ -1,9 +1,7 @@
-#include"login/login.cpp"
 
+#include"menu.cpp"
 int main(void)
 {
-	credentials c;
-	c.credentials_register();
-	c.credentials_login();
+	menu();
 	return 0;
 }

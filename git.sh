@@ -1,0 +1,1 @@
+git add . && git commit -m "Commit from bash script" && git push
