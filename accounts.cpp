@@ -3,6 +3,7 @@
 #include<time.h>
 #include<limits.h>
 #include<cstdlib>
+#include<cstdio>
 using namespace std;
 class accounts
 {
@@ -26,8 +27,25 @@ class accounts
 			return ac;
 		}
 		void accounts_delete();
+		string ret_name()
+		{
+		    return cname;
+		}
+		int exist(long);
 };
 
+int accounts::exist(long temp_ac)
+{
+    ifstream f1;
+    accounts a;
+    f1.open("accounts_db.dat",ios::binary);
+    while(f1.read((char*)&a,sizeof(a)))
+    {
+        if(a.retac()==temp_ac)
+            return 1;
+    }
+    return 0;
+}
 
 void accounts::accounts_delete()
 {
@@ -36,16 +54,17 @@ void accounts::accounts_delete()
     system("cls");
     cout<<"\nEnter account number to delete\n";
     cin>>temp_ac;
-    fstream f1,f2;
+    ifstream f1;
+    ofstream f2;
     bool found = 0;
     f1.open("accounts_db.dat",ios::binary);
     f2.open("acc_temp.dat",ios::binary|ios::app);
-    while(f1.read((char*)&a,sizeof(a)))
+   /* while(f1.read((char*)&a,sizeof(a)))
     {
         if(a.retac()==temp_ac)
             found = 1;
-    }
-   if(found==1)
+    }*/
+   if(exist(temp_ac)==1)
     {
 
      while(f1.read((char*)&a,sizeof(a)))
@@ -56,9 +75,14 @@ void accounts::accounts_delete()
             }
 
         }
+        f1.close();
+        f2.close();
+        char a[] = "accounts_db.dat";
+        string b = "acc_temp.dat";
+        remove(a);
+        rename(b.c_str(),a);
 
-            remove("accounts_db.dat");
-            rename("acc_temp.dat","accounts_db.dat");
+        cout<<"\nDeleted Successfully!\n";
 
    }
     else
@@ -94,8 +118,7 @@ void accounts::accounts_input()
 	cin>>nat;
 	fflush(stdin);
         bool flag_loop_out=0;
-        do
-        {
+
         cout<<"\n Enter account type - 1. Savings \t 2. Current\n";
         cin>>atype;
              /*   if(atype==1||atype==2)
@@ -110,15 +133,18 @@ void accounts::accounts_input()
 
 
 	do{
-	cout<<"\n Enter opening balance (more than 1500)\n";
-	cin>>bal;
-	}while(bal<1500);
+
+        cout<<"\n Enter opening balance (more than 1500)\n";
+        cin>>bal;
+
+        }while(bal<1500);
 	ac = account_number_generator();
+
 }
 void accounts::accounts_output()
 {
 	cout<<"\n----- CUSTOMER DETAILS ------\n";
-	cout<<"Name: "<<cname<<endl;
+	cout<<"Name: "<<this->ret_name()<<endl;
 	cout<<"phone: "<<pno<<endl;
 	cout<<"Nationality: "<<nat<<endl;
 	cout<<"Account Type: ";
