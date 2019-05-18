@@ -13,6 +13,12 @@ class accounts
 		int atype;
 		bool visibility = 1;
 		long ac;
+
+		//Extras vars
+		int hloan = 0;
+		int edloan = 0;
+		int fd= 0;
+		int insurance = 0;
 	public:
 		void accounts_input();
 		void accounts_output();
@@ -27,6 +33,40 @@ class accounts
 			return ac;
 		}
 		void accounts_delete();
+
+		// Extras fn
+
+		int rethloan()
+		{
+		    return hloan;
+		}
+		int sethloan(int a)
+		{
+		    hloan = a;
+		}
+		int retedloan()
+		{
+		    return edloan;
+		}
+		int setedloan(int a)
+		{
+		    edloan = a;
+		}
+		int retfd()
+		{
+		    return fd;
+		}
+		int setfd(int a)
+		{
+		    fd = a;
+		}int retinsurance()
+		{
+		    return insurance;
+		}
+		int setinsurance(int a)
+		{
+		    insurance = a;
+		}
 		string ret_name()
 		{
 		    return cname;
@@ -59,11 +99,7 @@ void accounts::accounts_delete()
     bool found = 0;
     f1.open("accounts_db.dat",ios::binary);
     f2.open("acc_temp.dat",ios::binary|ios::app);
-   /* while(f1.read((char*)&a,sizeof(a)))
-    {
-        if(a.retac()==temp_ac)
-            found = 1;
-    }*/
+
    if(exist(temp_ac)==1)
     {
 
@@ -89,7 +125,50 @@ void accounts::accounts_delete()
         cout<<"\n No account found with this account number\n";
 
 }
-
+void hloan_view()
+{
+    cout<<"\n \n -- ABOUT HOME LOAN -- \n \n";
+    cout<<"-- Features\n";
+    cout<<"* Low Interest rates\n* Low Processing Fees\n* No Hidden Charges\n * Repayment up to 30 yrs\n\n";
+    cout<<"\n-- Eligibility\n";
+    cout<<"* Indian Resident\n* Min age: 18 yrs\n * Max Age: 70yrs\n";
+    cout<<"\nInterest rate: 15% p.a \n\n";
+}
+void insurance_view()
+{
+    cout<<"\n\n -- ABOUT INSURANCE SCHEME \n";
+    cout<<"\n -- FEATURES\n";
+    cout<<"Security – to ensure your family is financially protected\n";
+    cout<<"Flexibility – Choose between two benefit structures and two rider options\n";
+    cout<<"Affordability – through reasonable premiums\n";
+    cout<<"\n\n -- Benefits\n";
+    cout<<"\n In case of Death - 105% of all the premiums paid as on date of death\n";
+    cout<<"\n Maturity Benefit is there in this Scheme\n";
+}
+void edloan_view()
+{
+    cout<<"\n\n -- ABOUT EDUCATION LOAN --\n\n";
+    cout<<" A term loan granted to Indian Nationals for pursuing higher education in India or abroad where admission has been secured.";
+    cout<<"\n -- Eligibility \n";
+    cout<<"* Indian Citizens can apply only\n";
+    cout<<"\n -- Security \n";
+    cout<<" * Upto 7.5L -  Only Parent/ Guardian as co-borrower. No Collateral Security or third party guarantee\n";
+    cout<<" * Above 7.5L -   Parent/ Guardian as co-borrower and tangible collateral security\n";
+    cout<<"\n -- Repayment\n";
+    cout<<" * Repayment will commence one year after completion of course.\n";
+    cout<<" * Loan to be repaid in 15 years after the commencement of repayment\n";
+    cout<<"\n\n --- R.O.I\n";
+    cout<<" * 11.25% p.a\n\n";
+}
+void fd_view()
+{
+    cout<<"\n\n-- About Fixed Deposit Scheme\n";
+    cout<<"-- R.O.I \n";
+    cout<<" * 7 days to 45 days - 5.75% p.a\n * 46 days to 179 days - 6.25% p.a\n";
+    cout<<" * 180 days to 210 days - 6.40% p.a\n * above 211 days - 6.50% p.a\n";
+    cout<<"\n\n Minimum Investment : Rs. 1000\n";
+    cout<<"Tenure : 7days - 10 years\n";
+}
 void accounts::accounts_show_all()
 {
 	accounts a;
@@ -121,15 +200,6 @@ void accounts::accounts_input()
 
         cout<<"\n Enter account type - 1. Savings \t 2. Current\n";
         cin>>atype;
-             /*   if(atype==1||atype==2)
-                {
-                    flag_loop_out=1;
-                    system("cls");
-                    cout<<"\nEnter valid account type\n";
-                    system("pause");
-                }
-        }while(flag_loop_out = 0);*/
-
 
 
 	do{
@@ -139,7 +209,64 @@ void accounts::accounts_input()
 
         }while(bal<1500);
 	ac = account_number_generator();
+    cout<<"do you want to opt services[0/1] \n";
+    int q;
+    cin>>q;
+    if(q==1)
+    {
+        int extras_choice = 0;
+        system("cls");
+        cout<<"\n\n ________________ Services ______________\n\n";
 
+        cout<<" 1. Home Loan\n 2. Education Loan\n 3. FD\n 4. Insurance\n\n";
+        cin>>extras_choice;
+        if(extras_choice ==1)
+        {
+
+            hloan_view();
+            cout<<"do you want to apply [0/1] \n";
+            int choice;
+            cin>>choice;
+            if(choice==1)
+            {
+                sethloan(1);
+            }
+        }
+        else if(extras_choice == 2)
+        {
+            edloan_view();
+            cout<<"do you want to apply [0/1] \n";
+            int choice;
+            cin>>choice;
+            if(choice==1)
+            {
+                setedloan(1);
+            }
+        }
+        else if(extras_choice == 3)
+        {
+            fd_view();
+            cout<<"do you want to apply [0/1] \n";
+            int choice;
+            cin>>choice;
+            if(choice==1)
+            {
+                setfd(1);
+            }
+        }
+        else if(extras_choice = 4)
+        {
+            insurance_view();
+            cout<<"do you want to apply [0/1] \n";
+            int choice;
+            cin>>choice;
+            if(choice==1)
+            {
+                setinsurance(1);
+            }
+
+        }
+    }
 }
 void accounts::accounts_output()
 {
@@ -151,6 +278,31 @@ void accounts::accounts_output()
 	atype==1?cout<<"Savings"<<endl:cout<<"Current"<<endl;
 	cout<<"Current balance: "<<bal<<endl;
 	cout<<"Account number : "<<this->retac()<<endl;
+	cout<<endl;cout<<endl;
+	cout<<"Home loan :";
+	if(rethloan()==1)
+            cout<<"Active\n";
+    else
+            cout<<"Not active\n";
+            cout<<endl;cout<<endl;
+    cout<<"Education loan :";
+	if(retedloan()==1)
+            cout<<"Active\n";
+    else
+            cout<<"Not active\n";
+            cout<<endl;
+            cout<<endl;
+    cout<<"FD : ";
+    if(retfd()==1)
+            cout<<"Active\n";
+    else
+            cout<<"Not active\n";
+    cout<<endl;cout<<endl;
+            cout<<"Insurance :";
+    if(retinsurance()==1)
+            cout<<"Active\n";
+    else
+            cout<<"Not Active\n";
 }
 void accounts::dep(float deposit_var)
 {
