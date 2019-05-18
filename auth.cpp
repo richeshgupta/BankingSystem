@@ -38,9 +38,10 @@ void user::cauth()
     f1.close();
 }
 int user::login()
-{   user u;
+{
+    user u;
     long temp_u,temp_p;
-    cout<<"\n Enter Username\n";
+    cout<<"\n Enter Username [numbers allowed only]\n";
     cin>>temp_u;
     fflush(stdin);
     ifstream f1;
@@ -49,23 +50,18 @@ int user::login()
     {
         if(u.ret_username()==temp_u)
         {
-            cout<<"Enter password\n";
+            cout<<"Enter password [numbers allowed only]\n";
                 cin>>temp_p;
             if(u.ret_password()==temp_p)
             {
               login_status = 1;
-                return 1;
             }
-            else
-                {
-                    return 0;
-                }
-        }
-        else
-        {
-            return 0;
         }
     }
+    if(login_status == 1)
+        return 1;
+    else
+        return 0;
     f1.close();
 
 }

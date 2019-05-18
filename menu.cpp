@@ -50,6 +50,7 @@ do{
     }
     else if(ch1==2)
     {   flag_loop = 0;
+        a.subinput();
     }
     else
     {   flag_loop = 1;

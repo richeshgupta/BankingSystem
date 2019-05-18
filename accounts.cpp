@@ -72,6 +72,8 @@ class accounts
 		    return cname;
 		}
 		int exist(long);
+		void subinput();
+		void suboutput();
 };
 
 int accounts::exist(long temp_ac)
@@ -214,7 +216,12 @@ void accounts::accounts_input()
     cin>>q;
     if(q==1)
     {
-        int extras_choice = 0;
+        subinput();
+    }
+}
+void accounts::subinput()
+{
+    int extras_choice = 0;
         system("cls");
         cout<<"\n\n ________________ Services ______________\n\n";
 
@@ -266,7 +273,6 @@ void accounts::accounts_input()
             }
 
         }
-    }
 }
 void accounts::accounts_output()
 {
@@ -278,7 +284,11 @@ void accounts::accounts_output()
 	atype==1?cout<<"Savings"<<endl:cout<<"Current"<<endl;
 	cout<<"Current balance: "<<bal<<endl;
 	cout<<"Account number : "<<this->retac()<<endl;
-	cout<<endl;cout<<endl;
+    suboutput();
+}
+void accounts::suboutput()
+{
+    cout<<endl;cout<<endl;
 	cout<<"Home loan :";
 	if(rethloan()==1)
             cout<<"Active\n";

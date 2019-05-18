@@ -23,6 +23,9 @@ int main()
         else
         {
             cout<<"Wrong password or Username entered\n";
+            system("pause");
+            cout<<endl;
+            system("cls");
             main();
         }
     }
